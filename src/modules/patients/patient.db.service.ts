@@ -8,20 +8,20 @@ export class PatientsService {
     this.patientCollection = dbInstance.collection("PATIENTS");
   }
 
-
   async checkPatientsExistence(email: string) {
-    const check = this.patientCollection.findOne({ email });
+    const check = await this.patientCollection.findOne({ email });
     return check;
   }
 
   async createPatient(details: PatientEntity) {
-    const checkPatient = this.checkPatientsExistence(details.email);
+    const checkPatient = await this.checkPatientsExistence(details.email);
     
-    if (checkPatient !== null) {
-      throw new Error('patient already exists')
+    if (!checkPatient) {
+      
+    const patient = await this.patientCollection.insertOne(details);
+    return patient.insertedId;  
     }
-    const patient = this.patientCollection.insertOne(details);
-    return patient;  
+    throw new Error("patient already exists");
   }
 
 }

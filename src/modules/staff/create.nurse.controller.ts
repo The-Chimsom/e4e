@@ -27,7 +27,7 @@ const databaseInstance = request.app.locals.mongoDbInstance
 
 const staffCollection = new StaffDatabaseService(databaseInstance)
 
-const staff = await  staffCollection.createClerk(payload)
+const staff =  await staffCollection.createNurse(payload)
 return successResponder(response, staff)
 }
 catch(error){

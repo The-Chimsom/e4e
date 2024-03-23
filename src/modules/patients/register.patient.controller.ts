@@ -36,12 +36,12 @@ export const registerPatientsHandler =async function(request: Request, response:
     const patientsService = new PatientsService(databaseInstance);
     const scheduleApointment = new AppointmentsService(databaseInstance);
 
-    const user = patientsService.createPatient(payload)
+    const user = await patientsService.createPatient(payload)
 
     const appointment = await scheduleApointment.scheduleAppointment({
       name: payload.name, 
-      appointmentDate: payload.appointmentDate,
-      userId: String(user),
+      appointmentDate: new Date(payload.appointmentDate),
+      userId: user,
       
     })
     return successResponder(response, {user, appointment})

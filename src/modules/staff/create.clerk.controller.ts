@@ -13,6 +13,7 @@ export const clerkValidator = (
   const validator = staffEntity.safeParse(payload);
 
   if (!validator.success) {
+    console.log(validator.error.message)
     throw new Error("VALIDATION ERROR");
   }
 
@@ -27,7 +28,7 @@ const databaseInstance = request.app.locals.mongoDbInstance
 
 const staffCollection = new StaffDatabaseService(databaseInstance)
 
-const staff =await  staffCollection.createClerk(payload)
+const staff = await staffCollection.createClerk(payload)
 return successResponder(response, staff)
 }
 catch(error){

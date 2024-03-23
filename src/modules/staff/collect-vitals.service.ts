@@ -9,7 +9,7 @@ export class VitalsService {
   }
 
   async collectVitals(vitalDetails: VitalDetails, nurseId: string) {
-    const vitals = this.vitals.insertOne({nurseId, vitalDetails})
+    const vitals = await this.vitals.insertOne({nurseId, vitalDetails})
     return vitals
   }
 }
