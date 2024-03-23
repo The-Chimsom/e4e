@@ -1,0 +1,29 @@
+{
+  "name": "e4e_take_home_assignment",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prebuild": "rimraf build ",
+    "build": "tsc -b",
+    "dev": "node --trace-warnings --enable-source-maps ./build/index.js",
+    "watch": "tsc-watch --compiler typescript/bin/tsc --onSuccess \"npm run dev\"",
+    "start:dev": "npm run build && npm run watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.17.21",
+    "express": "^4.19.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.5.0",
+    "rimraf": "^5.0.5",
+    "tsc-watch": "^6.0.4",
+    "typescript": "^5.4.3",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.6"
+  }
+}
