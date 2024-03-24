@@ -50,7 +50,7 @@ export class StaffDatabaseService {
     const staffId = String(createStaff.insertedId);
     const token = await this.createClerkJWT(staffId);
 
-    return { createStaff, token };
+    return { clerkId: createStaff.insertedId, token };
   }
 
   async createNurse(staffDetails: StaffEntity) {

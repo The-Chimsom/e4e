@@ -55,7 +55,7 @@ class StaffDatabaseService {
             const createStaff = yield this.staffCollection.insertOne(staffDetails);
             const staffId = String(createStaff.insertedId);
             const token = yield this.createClerkJWT(staffId);
-            return { createStaff, token };
+            return { clerkId: createStaff.insertedId, token };
         });
     }
     createNurse(staffDetails) {

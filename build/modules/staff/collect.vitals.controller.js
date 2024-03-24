@@ -8,17 +8,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __rest = (this && this.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.saveVitalsHandler = exports.patientVitalsValidator = void 0;
 const jwt_verify_1 = require("../../jwt.verify");
@@ -27,7 +16,7 @@ const collect_vitals_service_1 = require("./collect-vitals.service");
 const responder_1 = require("../../responder");
 const appointment_service_1 = require("../appointments/appointment.service");
 const patientVitalsValidator = function (request, _response, next) {
-    const { identifier, userId } = (0, jwt_verify_1.verifyJwt)(request);
+    const { identifier } = (0, jwt_verify_1.verifyJwt)(request);
     if (identifier !== staff_entity_1.StaffIdentifier.Enum.NURSE) {
         throw new Error("This user is not authorized to perform this operation");
     }
@@ -36,7 +25,7 @@ const patientVitalsValidator = function (request, _response, next) {
     if (!validator.success) {
         throw new Error("VALIDATION ERROR");
     }
-    request.body = Object.assign({ nurseId: userId }, validator.data);
+    request.body = validator.data;
     return next();
 };
 exports.patientVitalsValidator = patientVitalsValidator;
@@ -69,8 +58,7 @@ const saveVitalsHandler = function (request, response) {
             const databaseInstance = request.app.locals.mongoDbInstance;
             const vitalService = new collect_vitals_service_1.VitalsService(databaseInstance);
             const appointmentService = new appointment_service_1.AppointmentsService(databaseInstance);
-            const { nurseId } = payload, rest = __rest(payload, ["nurseId"]);
-            const vitals = yield vitalService.collectVitals(Object.assign({}, rest), nurseId);
+            const vitals = yield vitalService.collectVitals(payload);
             yield appointmentService.updateAppointmentStatus(vitals.insertedId);
             return (0, responder_1.successResponder)(response, vitals);
         }

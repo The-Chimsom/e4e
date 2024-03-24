@@ -10,7 +10,7 @@ export const patientVitalsValidator = function (
   _response: Response,
   next: NextFunction
 ) {
-  const { identifier, userId } = verifyJwt(request);
+  const { identifier } = verifyJwt(request);
 
   if (identifier !== StaffIdentifier.Enum.NURSE) {
     throw new Error("This user is not authorized to perform this operation");
@@ -23,7 +23,7 @@ export const patientVitalsValidator = function (
     throw new Error("VALIDATION ERROR");
   }
 
-  request.body = {nurseId: userId, ...validator.data};
+  request.body = validator.data;
   return next();
 };
 
@@ -56,9 +56,8 @@ export const saveVitalsHandler = async function(request: Request, response: Resp
       const vitalService = new VitalsService(databaseInstance);
       const appointmentService = new AppointmentsService(databaseInstance);
 
-      const { nurseId, ...rest } = payload;
 
-      const vitals = await vitalService.collectVitals({ ...rest }, nurseId);
+      const vitals = await vitalService.collectVitals(payload);
 
       await appointmentService.updateAppointmentStatus(vitals.insertedId);
 

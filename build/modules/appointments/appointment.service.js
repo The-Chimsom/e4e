@@ -22,13 +22,17 @@ class AppointmentsService {
     }
     pendingVitalPatients(appointmentStatus) {
         return __awaiter(this, void 0, void 0, function* () {
-            const fetchPendingPatients = yield this.appointments.find({ appointmentStatus: appointmentStatus });
+            const fetchPendingPatients = yield this.appointments.find({ appointmentStatus: appointmentStatus }).toArray();
             return fetchPendingPatients;
         });
     }
     updateAppointmentStatus(appointmentId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const updateStatus = yield this.appointments.updateOne(appointmentId, { appointmentStatus: 'SEEN' });
+            const updateStatus = yield this.appointments.updateOne({ _id: appointmentId }, {
+                $set: {
+                    appointmentStatus: "SEEN",
+                },
+            });
             return updateStatus.acknowledged;
         });
     }

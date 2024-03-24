@@ -7,4 +7,4 @@ export const staffRouter = Router()
 
 staffRouter.post('/register-clerk', clerkValidator, clerkSignupHandler)
 staffRouter.post('/register-nurse', nurseValidator, nurseSignupHandler )
-staffRouter.post("/nurse/save-vitals", patientVitalsValidator, saveVitalsHandler);
+staffRouter.post("/nurse/collect-vitals", patientVitalsValidator, saveVitalsHandler);

@@ -115,7 +115,7 @@
         }
       }
     },
-    "/nurse/save-vitals": {
+    "/nurse/collect-vitals": {
       "post": {
         "tags": [
           "NURSE"
@@ -133,7 +133,7 @@
           {
             "name": "obj",
             "in": "body",
-            "description": "This is a protected endpoint that allow the collection of patient's vitals by the nurse entitiy. Please pass in the token given to the nurse whn registering, and the nurse's id as the token and x-api-key, respectively",
+            "description": "This is a protected endpoint that allows the collection of patient's vitals by the nurse entitiy. Please pass in the token given to the nurse while registering, and the nurse's id as the token and x-api-key, respectively",
             "required": true,
             "schema": {
               "$ref": "#/definitions/vitalsSchema"
@@ -338,7 +338,7 @@
         "bodyMassIndex": {
           "type": "string"
         },
-        "userId": {
+        "appointmentId": {
           "type": "string"
         }
       },
@@ -348,7 +348,7 @@
         "temperature",
         "bloodPressure",
         "bodyMassIndex",
-        "userId"
+        "appointmentId"
       ],
       "additionalProperties": false,
       "$schema": "http://json-schema.org/draft-07/schema#"

@@ -21,7 +21,7 @@ export const vitalDetails = z.object({
     temperature: z.string().trim(),
     bloodPressure: z.string().trim(),
     bodyMassIndex: z.string().trim(),
-    userId: z.string().trim()
+    appointmentId: z.string().trim()
 })
 
 export type VitalDetails = z.infer<typeof vitalDetails>

@@ -14,9 +14,9 @@ class VitalsService {
     constructor(databaseInstance) {
         this.vitals = databaseInstance.collection("VITALS");
     }
-    collectVitals(vitalDetails, nurseId) {
+    collectVitals(vitalDetails) {
         return __awaiter(this, void 0, void 0, function* () {
-            const vitals = yield this.vitals.insertOne({ nurseId, vitalDetails });
+            const vitals = yield this.vitals.insertOne({ vitalDetails });
             return vitals;
         });
     }

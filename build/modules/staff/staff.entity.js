@@ -19,7 +19,7 @@ exports.vitalDetails = zod_1.z.object({
     temperature: zod_1.z.string().trim(),
     bloodPressure: zod_1.z.string().trim(),
     bodyMassIndex: zod_1.z.string().trim(),
-    userId: zod_1.z.string().trim()
+    appointmentId: zod_1.z.string().trim()
 });
 exports.VitalDetailsSchema = (0, zod_to_json_schema_1.default)(exports.vitalDetails);
 //# sourceMappingURL=staff.entity.js.map
