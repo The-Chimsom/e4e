@@ -57,6 +57,14 @@ export const saveVitalsHandler = async function(request: Request, response: Resp
       const appointmentService = new AppointmentsService(databaseInstance);
 
 
+
+      const appointment = await appointmentService.findAppointment(payload.appointmentId)
+
+      if (!appointment){
+        throw new Error('Please Refer patient to book an appointment')
+      }
+
+
       const vitals = await vitalService.collectVitals(payload);
 
       await appointmentService.updateAppointmentStatus(vitals.insertedId);

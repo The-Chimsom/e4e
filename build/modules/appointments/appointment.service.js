@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppointmentsService = void 0;
+const mongodb_1 = require("mongodb");
 class AppointmentsService {
     constructor(dbInstance) {
         this.appointments = dbInstance.collection("APPOINTMENTS");
@@ -22,10 +23,20 @@ class AppointmentsService {
     }
     pendingVitalPatients(appointmentStatus) {
         return __awaiter(this, void 0, void 0, function* () {
-            const fetchPendingPatients = yield this.appointments.find({ appointmentStatus: appointmentStatus }).toArray();
+            const fetchPendingPatients = yield this.appointments
+                .find({ appointmentStatus: appointmentStatus })
+                .toArray();
             return fetchPendingPatients;
         });
     }
+    findAppointment(appointmentId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const _appointmentId = new mongodb_1.ObjectId(appointmentId);
+            const appointment = yield this.appointments.findOne({ _id: _appointmentId });
+            return appointment;
+        });
+    }
+    ;
     updateAppointmentStatus(appointmentId) {
         return __awaiter(this, void 0, void 0, function* () {
             const updateStatus = yield this.appointments.updateOne({ _id: appointmentId }, {

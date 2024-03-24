@@ -9,9 +9,11 @@ const zod_to_json_schema_1 = __importDefault(require("zod-to-json-schema"));
 exports.patientEntity = zod_1.z.object({
     name: zod_1.z.string().trim(),
     email: zod_1.z.string().email(),
+    phoneNumber: zod_1.z.string().email(),
     age: zod_1.z.string().trim(),
     gender: zod_1.z.string().trim(),
-    appointmentDate: zod_1.z.string()
+    paymentOption: zod_1.z.string().email(),
+    appointmentDate: zod_1.z.string(),
 });
 exports.PatientEntitySchema = (0, zod_to_json_schema_1.default)(exports.patientEntity);
 //# sourceMappingURL=patient.entity.js.map

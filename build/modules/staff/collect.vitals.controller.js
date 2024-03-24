@@ -58,6 +58,10 @@ const saveVitalsHandler = function (request, response) {
             const databaseInstance = request.app.locals.mongoDbInstance;
             const vitalService = new collect_vitals_service_1.VitalsService(databaseInstance);
             const appointmentService = new appointment_service_1.AppointmentsService(databaseInstance);
+            const appointment = yield appointmentService.findAppointment(payload.appointmentId);
+            if (!appointment) {
+                throw new Error('Please Refer patient to book an appointment');
+            }
             const vitals = yield vitalService.collectVitals(payload);
             yield appointmentService.updateAppointmentStatus(vitals.insertedId);
             return (0, responder_1.successResponder)(response, vitals);

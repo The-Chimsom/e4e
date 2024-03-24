@@ -8,6 +8,8 @@ export class VitalsService {
     this.vitals = databaseInstance.collection("VITALS");
   }
 
+  
+
   async collectVitals(vitalDetails: VitalDetails) {
     const vitals = await this.vitals.insertOne({ vitalDetails})
     return vitals
