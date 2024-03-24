@@ -26,6 +26,27 @@ exports.nurseValidator = nurseValidator;
 const nurseSignupHandler = function (request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            /**
+              #swagger.auto = true
+              #swagger.tags = ['NURSE']
+              #swagger.summary = 'nurse signup page'
+              #swagger.description = 'nurse registration process'
+              #swagger.operationId = 'signup-nurse'
+              #swagger.consumes = ['application/json']
+              #swagger.produces = ['application/json']
+              #swagger.parameters['obj'] = {
+               in: 'body',
+               description: "This endpoint allows for the creation of the nurse entity. please fill out role as **NURSE**",
+               required: true,
+               schema: { $ref: '#/definitions/clerkEntity' }
+              }
+              
+              #swagger.responses[200] = { description: 'Model for succesful operation',
+               schema:  {
+                  $ref: '#/definitions/responseStringPayload'
+                }
+              }
+            */
             const payload = request.body;
             const databaseInstance = request.app.locals.mongoDbInstance;
             const staffCollection = new staff_db_service_1.StaffDatabaseService(databaseInstance);

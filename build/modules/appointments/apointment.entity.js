@@ -7,6 +7,7 @@ exports.AppointmentStatus = zod_1.z.enum(['SEEN', 'NOT-SEEN']);
 exports.appointmentDetails = zod_1.z.object({
     name: zod_1.z.string().trim(),
     userId: zod_1.z.instanceof(mongodb_1.ObjectId),
+    appointmentStatus: exports.AppointmentStatus,
     appointmentDate: zod_1.z.date(),
 });
 //# sourceMappingURL=apointment.entity.js.map

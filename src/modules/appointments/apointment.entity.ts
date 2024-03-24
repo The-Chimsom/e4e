@@ -6,6 +6,7 @@ export const AppointmentStatus = z.enum(['SEEN', 'NOT-SEEN'])
 export const appointmentDetails= z.object({
     name: z.string().trim(),
     userId: z.instanceof(ObjectId),
+    appointmentStatus: AppointmentStatus,
     appointmentDate: z.date(),
 })
 

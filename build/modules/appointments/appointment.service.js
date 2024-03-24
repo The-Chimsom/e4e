@@ -20,6 +20,18 @@ class AppointmentsService {
             return scheduleAppointment.insertedId;
         });
     }
+    pendingVitalPatients(appointmentStatus) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const fetchPendingPatients = yield this.appointments.find({ appointmentStatus: appointmentStatus });
+            return fetchPendingPatients;
+        });
+    }
+    updateAppointmentStatus(appointmentId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const updateStatus = yield this.appointments.updateOne(appointmentId, { appointmentStatus: 'SEEN' });
+            return updateStatus.acknowledged;
+        });
+    }
 }
 exports.AppointmentsService = AppointmentsService;
 //# sourceMappingURL=appointment.service.js.map

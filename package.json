@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "swagger:gen": "node ./build/swagger.js",
     "prebuild": "rimraf build ",
     "build": "tsc -b",
+    "postbuild": "npm run swagger:gen",
     "dev": "node --trace-warnings --enable-source-maps ./build/index.js",
     "watch": "tsc-watch --compiler typescript/bin/tsc --onSuccess \"npm run dev\"",
     "start:dev": "npm run build && npm run watch",
@@ -19,11 +21,15 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.5.0",
     "rimraf": "^5.0.5",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.0",
     "tsc-watch": "^6.0.4",
     "typescript": "^5.4.3",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "zod-to-json-schema": "^3.22.5"
   },
   "devDependencies": {
-    "@types/jsonwebtoken": "^9.0.6"
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/swagger-ui-express": "^4.1.6"
   }
 }

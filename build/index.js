@@ -14,11 +14,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const main_1 = require("./main");
 const express_1 = __importDefault(require("express"));
+const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const db_1 = require("./modules/database/db");
+const outputFile = require("./swagger_output.json");
 const server = (0, express_1.default)();
 ((app) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         app.use(express_1.default.json());
+        app.use("/api-docs", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(outputFile));
         const mongoClient = yield (0, db_1.connectToDb)();
         app.locals.mongoDbInstance = mongoClient;
         (0, main_1.main)(app).listen(3000);

@@ -39,8 +39,19 @@ class StaffDatabaseService {
             return token;
         });
     }
+    checkClerkExistence(email) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const clerk = yield this.staffCollection.findOne({ email });
+            return clerk;
+        });
+    }
     createClerk(staffDetails) {
         return __awaiter(this, void 0, void 0, function* () {
+            const clerk = yield this.checkClerkExistence(staffDetails.email);
+            if (clerk) {
+                const token = yield this.createClerkJWT(String(clerk._id));
+                return { message: 'A clerk with this mail already exists', token, clerkId: clerk._id };
+            }
             const createStaff = yield this.staffCollection.insertOne(staffDetails);
             const staffId = String(createStaff.insertedId);
             const token = yield this.createClerkJWT(staffId);

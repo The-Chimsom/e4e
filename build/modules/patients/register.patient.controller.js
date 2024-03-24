@@ -15,7 +15,8 @@ const patient_entity_1 = require("./patient.entity");
 const patient_db_service_1 = require("./patient.db.service");
 const staff_entity_1 = require("../staff/staff.entity");
 const responder_1 = require("../../responder");
-const appointment_service_1 = require("../staff/appointments/appointment.service");
+const appointment_service_1 = require("../appointments/appointment.service");
+const apointment_entity_1 = require("../appointments/apointment.entity");
 const registerPatientValidator = function (request, _response, next) {
     const { identifier } = (0, jwt_verify_1.verifyJwt)(request);
     if (identifier !== staff_entity_1.StaffIdentifier.Enum.CLERK) {
@@ -33,6 +34,29 @@ exports.registerPatientValidator = registerPatientValidator;
 const registerPatientsHandler = function (request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            /**
+            #swagger.auto = true
+            #swagger.tags = ['PATIENT']
+            #swagger.summary = 'registers new patients'
+            #swagger.description = 'patient's registration process'
+            #swagger.operationId = 'register-patients'
+            #swagger.security = [{"apiKeyAuth": [], "uid": []}]
+            #swagger.consumes = ['application/json']
+            #swagger.produces = ['application/json']
+            #swagger.parameters['obj'] = {
+             in: 'body',
+             description: 'This route lets a clerk register a patient and authomatically books them for vital collection by a nurse.
+             This is a Protected endpoint that takes in the schema stipulated below. It requires the clerk\'s token and and id passed in as x-api-key and x-uid, respectively.',
+             required: true,
+             schema: { $ref: '#/definitions/patientEntity' }
+            }
+            
+            #swagger.responses[200] = { description: 'Authorized returning user',
+             schema:  {
+                $ref: '#/definitions/responseStringPayload'
+              }
+            }
+            */
             const payload = request.body;
             const databaseInstance = request.app.locals.mongoDbInstance;
             const patientsService = new patient_db_service_1.PatientsService(databaseInstance);
@@ -42,11 +66,14 @@ const registerPatientsHandler = function (request, response) {
                 name: payload.name,
                 appointmentDate: new Date(payload.appointmentDate),
                 userId: user,
+                appointmentStatus: apointment_entity_1.AppointmentStatus.Enum["NOT-SEEN"]
             });
-            return (0, responder_1.successResponder)(response, { user, appointment });
+            return (0, responder_1.successResponder)(response, { user, appointmentId: appointment });
         }
         catch (error) {
-            return (0, responder_1.errorResponder)(response, 400, 'bad request');
+            // #swagger.responses[500] = { description: 'Server failure.', schema: { $ref: '#/definitions/responseStringPayload' }}
+            // #swagger.responses[400] = { description: 'Bad Request', schema: { $ref: '#/definitions/responseStringPayload' }}
+            return (0, responder_1.errorResponder)(response, 400, "bad request");
         }
     });
 };

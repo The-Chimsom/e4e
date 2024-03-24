@@ -1,0 +1,372 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Padinow API",
+    "description": "This document give an overview of all the endpoint expose by the HTTP backend \n\n\n **Authentication** \n\n For endpoints that requires authentication pass `X-API-KEY` and `X-UID` with there respective values as HTTP header.\n\n"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {
+    "apiKeyAuth": {
+      "type": "apiKey",
+      "name": "x-API-KEY",
+      "in": "header",
+      "scheme": "bearer",
+      "bearerFormat": "JWT",
+      "description": "API token"
+    },
+    "uid": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "X-UID",
+      "description": "Authenticated user ID"
+    }
+  },
+  "consumes": [
+    "applications/json"
+  ],
+  "produces": [
+    "applications/json"
+  ],
+  "paths": {
+    "/register-clerk": {
+      "post": {
+        "tags": [
+          "CLERK"
+        ],
+        "summary": "clerk signup page",
+        "description": "clerk",
+        "operationId": "signup-clerk",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "This endpoint allows for the creation of the clerk entity. please fill out role as **CLERK**",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/clerkEntity"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Model for succesful operation",
+            "schema": {
+              "$ref": "#/definitions/responseStringPayload"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/responseStringPayload"
+            }
+          },
+          "500": {
+            "description": "Server failure.",
+            "schema": {
+              "$ref": "#/definitions/responseStringPayload"
+            }
+          }
+        }
+      }
+    },
+    "/register-nurse": {
+      "post": {
+        "tags": [
+          "NURSE"
+        ],
+        "summary": "nurse signup page",
+        "description": "nurse registration process",
+        "operationId": "signup-nurse",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "This endpoint allows for the creation of the nurse entity. please fill out role as **NURSE**",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/clerkEntity"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Model for succesful operation",
+            "schema": {
+              "$ref": "#/definitions/responseStringPayload"
+            }
+          }
+        }
+      }
+    },
+    "/nurse/save-vitals": {
+      "post": {
+        "tags": [
+          "NURSE"
+        ],
+        "summary": "collection of vitals by the nurse entity",
+        "description": "allows the nurse entity to collect patient vitals",
+        "operationId": "vitals",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "This is a protected endpoint that allow the collection of patient's vitals by the nurse entitiy. Please pass in the token given to the nurse whn registering, and the nurse's id as the token and x-api-key, respectively",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/vitalsSchema"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Model for succesful operation",
+            "schema": {
+              "$ref": "#/definitions/responseStringPayload"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/responseStringPayload"
+            }
+          },
+          "500": {
+            "description": "Server failure.",
+            "schema": {
+              "$ref": "#/definitions/responseStringPayload"
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": [],
+            "uid": []
+          }
+        ]
+      }
+    },
+    "/register-patient": {
+      "post": {
+        "tags": [
+          "PATIENT"
+        ],
+        "summary": "registers new patients",
+        "description": "patient",
+        "operationId": "register-patients",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "This route lets a clerk register a patient and authomatically books them for vital collection by a nurse.  This is a Protected endpoint that takes in the schema stipulated below. It requires the clerk's token and and id passed in as x-api-key and x-uid, respectively.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/patientEntity"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Authorized returning user",
+            "schema": {
+              "$ref": "#/definitions/responseStringPayload"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/responseStringPayload"
+            }
+          },
+          "500": {
+            "description": "Server failure.",
+            "schema": {
+              "$ref": "#/definitions/responseStringPayload"
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": [],
+            "uid": []
+          }
+        ]
+      }
+    },
+    "/vitals-appointments": {
+      "get": {
+        "tags": [
+          "APPOINTMENT"
+        ],
+        "summary": "fetches all patients that have been booked for vital collection",
+        "description": "allows the nurse entity to see all patient booked for vitals",
+        "operationId": "appointment",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Model for succesful operation",
+            "schema": {
+              "$ref": "#/definitions/responseStringPayload"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/responseStringPayload"
+            }
+          },
+          "500": {
+            "description": "Server failure.",
+            "schema": {
+              "$ref": "#/definitions/responseStringPayload"
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": [],
+            "uid": []
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "clerkEntity": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "NURSE",
+            "CLERK"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "email",
+        "role"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "patientEntity": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "age": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "appointmentDate": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "email",
+        "age",
+        "gender",
+        "appointmentDate"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "vitalsSchema": {
+      "type": "object",
+      "properties": {
+        "height": {
+          "type": "string"
+        },
+        "weight": {
+          "type": "string"
+        },
+        "temperature": {
+          "type": "string"
+        },
+        "bloodPressure": {
+          "type": "string"
+        },
+        "bodyMassIndex": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "height",
+        "weight",
+        "temperature",
+        "bloodPressure",
+        "bodyMassIndex",
+        "userId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "responseStringPayload": {
+      "type": "object",
+      "properties": {
+        "isError": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "payload": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  "parameters": {}
+}

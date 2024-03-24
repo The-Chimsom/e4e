@@ -27,6 +27,27 @@ exports.clerkValidator = clerkValidator;
 const clerkSignupHandler = function (request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            /**
+              #swagger.auto = true
+              #swagger.tags = ['CLERK']
+              #swagger.summary = 'clerk signup page'
+              #swagger.description = 'clerk's registration process'
+              #swagger.operationId = 'signup-clerk'
+              #swagger.consumes = ['application/json']
+              #swagger.produces = ['application/json']
+              #swagger.parameters['obj'] = {
+               in: 'body',
+               description: "This endpoint allows for the creation of the clerk entity. please fill out role as **CLERK**",
+               required: true,
+               schema: { $ref: '#/definitions/clerkEntity' }
+              }
+              
+              #swagger.responses[200] = { description: 'Model for succesful operation',
+               schema:  {
+                  $ref: '#/definitions/responseStringPayload'
+                }
+              }
+              */
             const payload = request.body;
             const databaseInstance = request.app.locals.mongoDbInstance;
             const staffCollection = new staff_db_service_1.StaffDatabaseService(databaseInstance);
@@ -34,7 +55,9 @@ const clerkSignupHandler = function (request, response) {
             return (0, responder_1.successResponder)(response, staff);
         }
         catch (error) {
-            return (0, responder_1.errorResponder)(response, 400, 'server error');
+            // #swagger.responses[500] = { description: 'Server failure.', schema: { $ref: '#/definitions/responseStringPayload' }}
+            // #swagger.responses[400] = { description: 'Bad Request', schema: { $ref: '#/definitions/responseStringPayload' }}
+            return (0, responder_1.errorResponder)(response, 400, "Bad Request");
         }
     });
 };

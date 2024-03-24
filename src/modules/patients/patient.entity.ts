@@ -1,4 +1,6 @@
 import {z} from 'zod'
+import zodToJsonSchema from 'zod-to-json-schema';
+
 
 export const patientEntity = z.object({
     name: z.string().trim(),
@@ -9,4 +11,6 @@ export const patientEntity = z.object({
 })
 
 export type PatientEntity = z.infer<typeof patientEntity>
+
+export const PatientEntitySchema = zodToJsonSchema(patientEntity)
 
