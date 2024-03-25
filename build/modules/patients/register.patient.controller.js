@@ -35,28 +35,29 @@ const registerPatientsHandler = function (request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             /**
-            #swagger.auto = true
-            #swagger.tags = ['PATIENT']
-            #swagger.summary = 'registers new patients'
-            #swagger.description = 'patient's registration process'
-            #swagger.operationId = 'register-patients'
-            #swagger.security = [{"apiKeyAuth": [], "uid": []}]
-            #swagger.consumes = ['application/json']
-            #swagger.produces = ['application/json']
-            #swagger.parameters['obj'] = {
-             in: 'body',
-             description: 'This route lets a clerk register a patient and authomatically books them for vital collection by a nurse.
-             This is a Protected endpoint that takes in the schema stipulated below. It requires the clerk\'s token and and id passed in as x-api-key and x-uid, respectively.',
-             required: true,
-             schema: { $ref: '#/definitions/patientEntity' }
+          #swagger.auto = true
+          #swagger.tags = ['PATIENT']
+          #swagger.summary = 'registers new patients'
+          #swagger.description = 'patient's registration process'
+          #swagger.operationId = 'register-patients'
+          #swagger.security = [{"apiKeyAuth": [], "uid": []}]
+          #swagger.consumes = ['application/json']
+          #swagger.produces = ['application/json']
+          #swagger.parameters['obj'] = {
+           in: "body",
+           description: "This route lets a clerk register a patient and authomatically books them for vital collection by a nurse.
+           This is a Protected endpoint that takes in the schema stipulated below. It requires the clerk\'s token and and id passed in as x-api-key and x-uid, respectively.
+            **IMPORTANT NOTICE:** The date entity is of tthe UTC date format",
+           required: true,
+           schema: { $ref: '#/definitions/patientEntity' }
+          }
+          
+          #swagger.responses[200] = { description: 'Authorized returning user',
+           schema:  {
+              $ref: '#/definitions/responseStringPayload'
             }
-            
-            #swagger.responses[200] = { description: 'Authorized returning user',
-             schema:  {
-                $ref: '#/definitions/responseStringPayload'
-              }
-            }
-            */
+          }
+          */
             const payload = request.body;
             const databaseInstance = request.app.locals.mongoDbInstance;
             const patientsService = new patient_db_service_1.PatientsService(databaseInstance);
@@ -66,7 +67,7 @@ const registerPatientsHandler = function (request, response) {
                 name: payload.name,
                 appointmentDate: new Date(payload.appointmentDate),
                 userId: user,
-                appointmentStatus: apointment_entity_1.AppointmentStatus.Enum["NOT-SEEN"]
+                appointmentStatus: apointment_entity_1.AppointmentStatus.Enum["NOT-SEEN"],
             });
             return (0, responder_1.successResponder)(response, { user, appointmentId: appointment });
         }

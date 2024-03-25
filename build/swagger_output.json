@@ -186,7 +186,7 @@
           {
             "name": "obj",
             "in": "body",
-            "description": "This route lets a clerk register a patient and authomatically books them for vital collection by a nurse.  This is a Protected endpoint that takes in the schema stipulated below. It requires the clerk's token and and id passed in as x-api-key and x-uid, respectively.",
+            "description": "This route lets a clerk register a patient and authomatically books them for vital collection by a nurse.  This is a Protected endpoint that takes in the schema stipulated below. It requires the clerk's token and and id passed in as x-api-key and x-uid, respectively.  **IMPORTANT NOTICE:** The date entity is of tthe UTC date format",
             "required": true,
             "schema": {
               "$ref": "#/definitions/patientEntity"
