@@ -27,7 +27,7 @@ const staff_entity_1 = require("./modules/staff/staff.entity");
     const doc = {
         info: {
             version: "1.0.0",
-            title: "Padinow API",
+            title: "Patient Dashboard API",
             description: "This document give an overview of all the endpoint expose by the HTTP backend \n\n\n **Authentication** \n\n For endpoints that requires authentication pass `X-API-KEY` and `X-UID` with there respective values as HTTP header.\n\n",
         },
         host: host,

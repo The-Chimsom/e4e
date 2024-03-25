@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "Padinow API",
+    "title": "Patient Dashboard API",
     "description": "This document give an overview of all the endpoint expose by the HTTP backend \n\n\n **Authentication** \n\n For endpoints that requires authentication pass `X-API-KEY` and `X-UID` with there respective values as HTTP header.\n\n"
   },
   "host": "localhost:3000",
@@ -300,11 +300,19 @@
           "type": "string",
           "format": "email"
         },
+        "phoneNumber": {
+          "type": "string",
+          "format": "email"
+        },
         "age": {
           "type": "string"
         },
         "gender": {
           "type": "string"
+        },
+        "paymentOption": {
+          "type": "string",
+          "format": "email"
         },
         "appointmentDate": {
           "type": "string"
@@ -313,8 +321,10 @@
       "required": [
         "name",
         "email",
+        "phoneNumber",
         "age",
         "gender",
+        "paymentOption",
         "appointmentDate"
       ],
       "additionalProperties": false,

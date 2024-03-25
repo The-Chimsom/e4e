@@ -16,7 +16,7 @@ import { VitalDetailsSchema, clerkEntitySchema } from "./modules/staff/staff.ent
   const doc = {
     info: {
       version: "1.0.0",
-      title: "Padinow API",
+      title: "Patient Dashboard API",
       description:
         "This document give an overview of all the endpoint expose by the HTTP backend \n\n\n **Authentication** \n\n For endpoints that requires authentication pass `X-API-KEY` and `X-UID` with there respective values as HTTP header.\n\n",
     },
